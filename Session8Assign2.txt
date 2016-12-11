@@ -1,0 +1,49 @@
+1) CONCAT
+emp_det = LOAD '/home/acadgild/workspace/mywork/Session8/employee_details.txt' USING PigStorage(',') AS (id:int, name:chararray, salary:float, rating:int, lname:chararray);
+emp_det_concat =  FOREACH emp_det GENERATE CONCAT(name, lname);
+dump emp_det_concat;
+
+2) Tokenize
+emp_det_line = LOAD '/home/acadgild/workspace/mywork/Session8/employee_details.txt' AS (line:chararray);
+emp_det_word = FOREACH emp_det_line GENERATE TOKENIZE(line,',') as word;
+dump emp_det_word;
+
+3) SUM
+stud_mark = LOAD '/home/acadgild/workspace/mywork/Session8/StudentMarks.txt' USING PigStorage(',') AS (name:chararray,marks:int);
+groupd = group stud_mark by name;
+res = foreach x generate SUM(stud_mark.marks), group;
+dump res;
+
+(123,A)
+(135,B)
+(211,C)
+
+4)MIN
+
+res = foreach x generate SUM(stud_mark.marks), group, MIN(stud_mark.marks);
+
+5)MAX
+res = foreach x generate MAX(stud_mark.marks), group, MIN(stud_mark.marks);
+
+6)LIMIT
+ y = limit emp_det 3;
+
+7)STORE
+STORE x into '/home/acadgild/workspace/mywork/Session8/Store' USING PigStorage('\t');
+
+8)DISTINCT
+distinct_x = DISTINCT x;
+
+9) FLATTEN
+
+emp_det_line = LOAD '/home/acadgild/workspace/mywork/Session8/employee_details.txt' AS (line:chararray);
+emp_det_word = FOREACH emp_det_line GENERATE FLATTEN(TOKENIZE(line,',')) as word;
+dump emp_det_word;
+
+10) IsEmpty
+
+stud_mark1 = LOAD '/home/acadgild/workspace/mywork/Session8/StudentMarksBlank.txt' USING PigStorage(',') AS (name:chararray,marks:int);
+grupd = group stud_mark1 by $1;
+filtered = filter grupd by IsEmpty($0);
+dump filtered;
+

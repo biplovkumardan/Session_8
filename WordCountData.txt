@@ -1,0 +1,7 @@
+Welcome to CentOS
+The Community ENTerprise Operating System
+CentOS is an Enterprise-class Linux Distribution derived from sources
+CentOS conforms fully with the upstream vendors redistribution policy
+CentOS mainly changes packages to remove upstream vendors branding and artwork
+
+
